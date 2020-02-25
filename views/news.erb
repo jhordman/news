@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Google Fonts -->
+    <!-- Swap out "Roboto" for the font(s) you want to use -->
+    <link href="https://fonts.googleapis.com/css?family=Sigmar+One&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" crossorigin="anonymous">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    
+    <!-- Your own CSS -->
+    <link rel="stylesheet" href="/styles.css">
+
+    <title>The Daily Report: <%= @location %></title>
+  </head>
+  <body>
+
+    <div class="jumbotron">
+        <h1 class="display-4">The Daily Report: <%= @location %></h1>
+        <p class="lead">Your daily dose of local weather and news since 2020.</p>
+        <p class="lead">
+            <a class="btn btn-danger btn-lg" href="/" role="button">Change Location</a>
+        </p>
+    </div>
+
+    <div class="container my-4">
+        <h3>Current Weather</h3>
+        <p>
+            In
+            <%= @location %>,
+            it is currently
+            <%= @forecast["currently"]["temperature"].to_i %>
+            degrees and
+            <%= @forecast["currently"]["summary"].downcase %>.
+            Have a great day!
+        </p>
+    </div>
+
+    <div class="container my-4">
+        <h3>Extended Forecast</h3>
+        <div class="container my-4">
+            <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">Day</th>
+                <th scope="col">High</th>
+                <th scope="col">Forecast</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% for day in @forecast["daily"]["data"] %>
+                    <tr>
+                        <th scope="row"><%= Time.at(day["time"]).strftime("%A, %B %d") %></th>
+                        <td><%= day["temperatureHigh"].to_i %></td>
+                        <td><%= day["summary"] %></td>
+                    </tr>
+                <% end %>
+            </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="container my-4">
+        <h3>
+            National Headlines for
+            <%= Time.at(day["time"]).strftime("%A, %B %d") %> 
+        </h3>
+        <% for article in @news["articles"] %> 
+            <div class="container my-4">
+                <div class="row">
+                    <div class="col-9">
+                        <h5><%= article["title"] %></h5>
+                    </div>
+                    <div class="col-3">
+                        <a href="<%= article["url"] %>" class="btn btn-danger">Read Now</a>    
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-9">
+                        <i><%= article["description"] %>
+                        - <%= article["source"]["name"] %></i>
+                    </div>
+                </div>
+                <hr>
+            </div>
+        <% end %>
+    </div>
+        
+        
+        
+        
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>

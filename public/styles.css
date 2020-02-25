@@ -1,0 +1,19 @@
+h1 {
+    font-family:'Sigmar One';
+    text-shadow: 5px 5px #ffffff;
+    color:#dc3545;
+}
+
+h3 {
+    font-family:'Sigmar One';
+}
+
+.jumbotron {
+    background-color: pink;
+}
+
+.btn {
+    border: 0 none;
+    border-radius:0;
+    text-transform: uppercase;
+}
